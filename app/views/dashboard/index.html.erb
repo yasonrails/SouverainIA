@@ -1,0 +1,340 @@
+<div class="d-flex">
+  <!-- Sidebar -->
+  <nav class="sidebar-modern">
+    <div class="sidebar-header text-center p-4">
+      <div class="d-inline-block p-3 rounded-circle mb-3" style="background: var(--primary-gradient);">
+        <i class="fas fa-brain fa-2x text-white"></i>
+      </div>
+      <h4 class="text-white mb-0">SouverainIA</h4>
+      <p class="text-white-50 small">Intelligence Artificielle Souveraine</p>
+    </div>
+    <ul class="nav flex-column">
+      <li class="nav-item mb-2">
+        <%= link_to dashboard_index_path, class: 'nav-link text-white' do %>
+          <i class="fas fa-tachometer-alt me-2"></i> Tableau de Bord
+        <% end %>
+      </li>
+      <li class="nav-item mb-2">
+        <%= link_to ai_models_path, class: 'nav-link text-white' do %>
+          <i class="fas fa-robot me-2"></i> Modèles IA
+        <% end %>
+      </li>
+      <li class="nav-item mb-2">
+        <%= link_to pipelines_path, class: 'nav-link text-white' do %>
+          <i class="fas fa-cogs me-2"></i> Pipelines
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link text-white' do %>
+          <i class="fas fa-sign-out-alt me-2"></i> Déconnexion
+        <% end %>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+          <h1 class="display-5 fw-bold text-gradient mb-1">Tableau de Bord</h1>
+          <p class="text-muted">
+            <i class="fas fa-user-circle me-2"></i>
+            Bienvenue, <%= current_user.email %> 
+            <span class="badge badge-modern" style="background: var(--primary-gradient)">
+              <%= current_user.role %>
+            </span>
+          </p>
+        </div>
+        <div class="d-flex gap-3">
+          <button class="btn-gradient">
+            <i class="fas fa-plus me-2"></i>
+            Nouveau Modèle
+          </button>
+          <button class="btn btn-light shadow-sm">
+            <i class="fas fa-cog me-2"></i>
+            Paramètres
+          </button>
+        </div>
+      </div>
+
+      <!-- Statistics Cards -->
+      <div class="row g-4 mb-5">
+        <div class="col-xl-3 col-md-6" data-aos="fade-up">
+          <div class="modern-card h-100">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="rounded-circle p-3" style="background: rgba(102, 126, 234, 0.1)">
+                  <i class="fas fa-robot fa-lg text-primary"></i>
+                </div>
+                <span class="badge badge-modern badge-success">Actif</span>
+              </div>
+              <h6 class="text-muted mb-2">Modèles IA</h6>
+              <h2 class="mb-0 display-5 fw-bold text-gradient"><%= @ai_models.count %></h2>
+              <p class="text-success mt-2 mb-0">
+                <i class="fas fa-arrow-up me-1"></i>
+                <small>12% ce mois</small>
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="modern-card h-100">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="rounded-circle p-3" style="background: rgba(118, 75, 162, 0.1)">
+                  <i class="fas fa-cogs fa-lg" style="color: #764ba2"></i>
+                </div>
+                <span class="badge badge-modern badge-success">Stable</span>
+              </div>
+              <h6 class="text-muted mb-2">Pipelines</h6>
+              <h2 class="mb-0 display-5 fw-bold text-gradient"><%= @pipelines.count %></h2>
+              <p class="text-success mt-2 mb-0">
+                <i class="fas fa-arrow-up me-1"></i>
+                <small>8% ce mois</small>
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="modern-card h-100">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="rounded-circle p-3" style="background: rgba(72, 187, 120, 0.1)">
+                  <i class="fas fa-memory fa-lg text-success"></i>
+                </div>
+                <span class="badge badge-modern badge-success">Optimal</span>
+              </div>
+              <h6 class="text-muted mb-2">Performance</h6>
+              <h2 class="mb-0 display-5 fw-bold text-gradient">98%</h2>
+              <p class="text-success mt-2 mb-0">
+                <i class="fas fa-check-circle me-1"></i>
+                <small>Tous systèmes ok</small>
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="modern-card h-100">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="rounded-circle p-3" style="background: rgba(237, 137, 54, 0.1)">
+                  <i class="fas fa-clock fa-lg text-warning"></i>
+                </div>
+                <span class="badge badge-modern badge-warning">En cours</span>
+              </div>
+              <h6 class="text-muted mb-2">Tâches actives</h6>
+              <h2 class="mb-0 display-5 fw-bold text-gradient">5</h2>
+              <p class="text-warning mt-2 mb-0">
+                <i class="fas fa-sync-alt me-1"></i>
+                <small>3 en traitement</small>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Models Section -->
+      <div class="modern-card mb-5">
+        <div class="card-body p-4">
+                <!-- Filtres Avancés -->
+      <div class="filter-section mb-4" data-controller="filters">
+        <div class="filter-header" data-action="click->filters#toggle">
+          <h5 class="mb-0"><i class="fas fa-filter me-2"></i>Filtres Avancés</h5>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="filter-content" data-filters-target="content">
+          <%= form_tag dashboard_index_path, method: :get, id: 'advanced-filters', class: 'row g-3', data: { remote: true } do %>
+            <div class="col-md-4">
+              <label class="form-label">Statut</label>
+              <%= select_tag :status, 
+                  options_for_select(['Tous', 'Actif', 'En pause', 'Terminé']), 
+                  class: 'form-select',
+                  data: { action: 'change->filters#submit' } %>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Type de modèle</label>
+              <%= select_tag :model_type,
+                  options_for_select(['Tous', 'Classification', 'Régression', 'NLP']),
+                  class: 'form-select',
+                  data: { action: 'change->filters#submit' } %>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Trier par</label>
+              <%= select_tag :sort_by,
+                  options_for_select(['Date', 'Performance', 'Nom']),
+                  class: 'form-select',
+                  data: { action: 'change->filters#submit' } %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Section Modèles IA -->
+      <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="fw-bold mb-0">Mes Modèles IA</h2>
+          <%= link_to new_ai_model_path, class: 'btn-gradient' do %>
+            <i class="fas fa-plus me-2"></i>Créer un Nouveau Modèle
+          <% end %>
+        </div>
+        
+        <div id="filtered-results">
+          <div class="table-responsive">
+            <table class="table table-modern">
+              <thead>
+                <tr>
+                  <th>Nom</th>
+                  <th>Description</th>
+                  <th>Statut</th>
+                  <th>Performance</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+          
+          <div class="table-responsive">
+            <table class="table table-modern">
+              <thead>
+                <tr>
+                  <th>Nom du Modèle</th>
+                  <th>Description</th>
+                  <th>Statut</th>
+                  <th>Performance</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+          <tbody>
+            <% @ai_models.each do |model| %>
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="rounded p-2 me-3" style="background: rgba(102, 126, 234, 0.1)">
+                      <i class="fas fa-brain text-primary"></i>
+                    </div>
+                    <%= link_to model.name, ai_model_path(model), class: 'text-decoration-none fw-bold' %>
+                  </div>
+                </td>
+                <td><%= model.description %></td>
+                <td>
+                  <span class="badge badge-modern badge-success">
+                    <i class="fas fa-circle me-1" style="font-size: 8px"></i>
+                    <%= model.status %>
+                  </span>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="progress flex-grow-1" style="height: 6px;">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 85%"></div>
+                    </div>
+                    <span class="ms-2 text-muted small">85%</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <%= link_to ai_model_path(model), class: 'btn btn-light btn-sm rounded-circle' do %>
+                      <i class="fas fa-eye"></i>
+                    <% end %>
+                    <%= link_to edit_ai_model_path(model), class: 'btn btn-light btn-sm rounded-circle' do %>
+                      <i class="fas fa-edit"></i>
+                    <% end %>
+                    <button class="btn btn-light btn-sm rounded-circle">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pipelines Section -->
+      <div class="modern-card">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0">Mes Pipelines</h2>
+            <%= link_to new_pipeline_path, class: 'btn-gradient' do %>
+              <i class="fas fa-plus me-2"></i>Créer un Nouveau Pipeline
+            <% end %>
+          </div>
+          
+          <div class="table-responsive">
+            <table class="table table-modern">
+              <thead>
+                <tr>
+                  <th>Pipeline</th>
+                  <th>Description</th>
+                  <th>État</th>
+                  <th>Dernière exécution</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+          <tbody>
+            <% @pipelines.each do |pipeline| %>
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="rounded p-2 me-3" style="background: rgba(118, 75, 162, 0.1)">
+                      <i class="fas fa-cogs" style="color: #764ba2"></i>
+                    </div>
+                    <%= link_to pipeline.name, pipeline_path(pipeline), class: 'text-decoration-none fw-bold' %>
+                  </div>
+                </td>
+                <td><%= pipeline.description %></td>
+                <td>
+                  <span class="badge badge-modern badge-success">
+                    <i class="fas fa-check-circle me-1"></i>
+                    Opérationnel
+                  </span>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-clock text-muted me-2"></i>
+                    <span class="text-muted small">Il y a 2 heures</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <%= link_to pipeline_path(pipeline), class: 'btn btn-light btn-sm rounded-circle' do %>
+                      <i class="fas fa-eye"></i>
+                    <% end %>
+                    <%= link_to edit_pipeline_path(pipeline), class: 'btn btn-light btn-sm rounded-circle' do %>
+                      <i class="fas fa-edit"></i>
+                    <% end %>
+                    <button class="btn btn-light btn-sm rounded-circle">
+                      <i class="fas fa-play"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1000;
+}
+
+.sidebar .nav-link {
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  transition: background 0.3s;
+}
+
+.sidebar .nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+</style>

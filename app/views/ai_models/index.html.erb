@@ -1,0 +1,28 @@
+<h1>Modèles IA</h1>
+
+<%= link_to 'Nouveau Modèle', new_ai_model_path, class: 'btn btn-primary' %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Description</th>
+      <th>Statut</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @ai_models.each do |model| %>
+      <tr>
+        <td><%= link_to model.name, ai_model_path(model) %></td>
+        <td><%= model.description %></td>
+        <td><%= model.status %></td>
+        <td>
+          <%= link_to 'Voir', ai_model_path(model) %>
+          <%= link_to 'Éditer', edit_ai_model_path(model) %>
+          <%= link_to 'Supprimer', ai_model_path(model), method: :delete, data: { confirm: 'Êtes-vous sûr?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

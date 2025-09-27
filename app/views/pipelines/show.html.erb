@@ -1,0 +1,296 @@
+<div class="content-wrapper">
+  <!-- Header Section -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><%= link_to 'Pipelines', pipelines_path, class: 'text-decoration-none' %></li>
+          <li class="breadcrumb-item active" aria-current="page"><%= @pipeline.name %></li>
+        </ol>
+      </nav>
+      <h1 class="display-6 fw-bold text-gradient mb-0"><%= @pipeline.name %></h1>
+    </div>
+    <div class="d-flex gap-2">
+      <button class="btn-gradient">
+        <i class="fas fa-play me-2"></i>Exécuter
+      </button>
+      <%= link_to edit_pipeline_path(@pipeline), class: 'btn btn-light' do %>
+        <i class="fas fa-edit me-2"></i>Éditer
+      <% end %>
+      <div class="dropdown">
+        <button class="btn btn-light" type="button" data-bs-toggle="dropdown">
+          <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="#"><i class="fas fa-history me-2"></i>Historique</a></li>
+          <li><a class="dropdown-item" href="#"><i class="fas fa-copy me-2"></i>Dupliquer</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash me-2"></i>Supprimer</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="row g-4">
+    <!-- Left Column -->
+    <div class="col-lg-8">
+      <!-- Pipeline Overview Card -->
+      <div class="modern-card mb-4">
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-4">Pipeline Status</h5>
+          <div class="row g-4">
+            <div class="col-md-6">
+              <div class="d-flex align-items-center mb-3">
+                <div class="rounded p-2 me-3" style="background: rgba(102, 126, 234, 0.1)">
+                  <i class="fas fa-cogs text-primary"></i>
+                </div>
+                <div>
+                  <h6 class="mb-1">Type de Pipeline</h6>
+                  <p class="mb-0 text-muted">Traitement de données</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex align-items-center mb-3">
+                <div class="rounded p-2 me-3" style="background: rgba(72, 187, 120, 0.1)">
+                  <i class="fas fa-check-circle text-success"></i>
+                </div>
+                <div>
+                  <h6 class="mb-1">Statut</h6>
+                  <p class="mb-0">
+                    <span class="badge badge-modern badge-success">
+                      <i class="fas fa-circle me-1" style="font-size: 8px"></i>
+                      <%= @pipeline.status %>
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pipeline Progress -->
+          <div class="mt-4">
+            <h6 class="mb-3">Progression actuelle</h6>
+            <div class="pipeline-progress">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Progression globale</span>
+                <span class="fw-bold">75%</span>
+              </div>
+              <div class="progress mb-4" style="height: 8px;">
+                <div class="progress-bar bg-primary" role="progressbar" style="width: 75%"></div>
+              </div>
+              
+              <!-- Pipeline Steps -->
+              <div class="pipeline-steps">
+                <div class="step completed">
+                  <div class="step-icon">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <div class="step-content">
+                    <h6 class="mb-1">Prétraitement des données</h6>
+                    <p class="text-muted mb-0">Terminé en 2min</p>
+                  </div>
+                </div>
+                <div class="step completed">
+                  <div class="step-icon">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <div class="step-content">
+                    <h6 class="mb-1">Feature Engineering</h6>
+                    <p class="text-muted mb-0">Terminé en 5min</p>
+                  </div>
+                </div>
+                <div class="step active">
+                  <div class="step-icon">
+                    <i class="fas fa-sync fa-spin"></i>
+                  </div>
+                  <div class="step-content">
+                    <h6 class="mb-1">Entraînement du modèle</h6>
+                    <p class="text-muted mb-0">En cours...</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-icon">
+                    <i class="fas fa-clock"></i>
+                  </div>
+                  <div class="step-content">
+                    <h6 class="mb-1">Évaluation</h6>
+                    <p class="text-muted mb-0">En attente</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Metrics -->
+      <div class="modern-card">
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-4">Métriques d'Exécution</h5>
+          <canvas id="pipelineMetrics" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="col-lg-4">
+      <!-- Pipeline Info -->
+      <div class="modern-card mb-4">
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-4">Informations</h5>
+          <div class="mb-4">
+            <h6 class="text-muted mb-2">Description</h6>
+            <p class="mb-0"><%= @pipeline.description %></p>
+          </div>
+          <div class="mb-4">
+            <h6 class="text-muted mb-2">Modèle IA associé</h6>
+            <%= link_to ai_model_path(@pipeline.ai_model), class: 'text-decoration-none' do %>
+              <div class="d-flex align-items-center">
+                <div class="rounded p-2 me-3" style="background: rgba(102, 126, 234, 0.1)">
+                  <i class="fas fa-brain text-primary"></i>
+                </div>
+                <span class="fw-bold"><%= @pipeline.ai_model.name %></span>
+              </div>
+            <% end %>
+          </div>
+          <div>
+            <h6 class="text-muted mb-2">Propriétaire</h6>
+            <div class="d-flex align-items-center">
+              <div class="rounded p-2 me-3" style="background: rgba(72, 187, 120, 0.1)">
+                <i class="fas fa-user text-success"></i>
+              </div>
+              <span><%= @pipeline.user.email %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Files -->
+      <div class="modern-card">
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-4">Fichiers de données</h5>
+          <% if @pipeline.data_files.attached? %>
+            <div class="list-group list-group-flush">
+              <% @pipeline.data_files.each do |file| %>
+                <div class="list-group-item d-flex align-items-center border-0 px-0">
+                  <div class="rounded p-2 me-3" style="background: rgba(102, 126, 234, 0.1)">
+                    <i class="fas fa-file-alt text-primary"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h6 class="mb-0"><%= file.filename %></h6>
+                    <small class="text-muted"><%= number_to_human_size(file.byte_size) %></small>
+                  </div>
+                  <%= link_to rails_blob_path(file), class: 'btn btn-light btn-sm rounded-circle', target: '_blank' do %>
+                    <i class="fas fa-download"></i>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="text-muted mb-0">Aucun fichier attaché</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.pipeline-steps {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.pipeline-steps::before {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e2e8f0;
+  transform: translateX(-50%);
+}
+
+.step {
+  position: relative;
+  padding-bottom: 2rem;
+  padding-left: 2rem;
+}
+
+.step:last-child {
+  padding-bottom: 0;
+}
+
+.step-icon {
+  position: absolute;
+  left: -1rem;
+  width: 2rem;
+  height: 2rem;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #e2e8f0;
+  z-index: 1;
+}
+
+.step.completed .step-icon {
+  background: var(--success);
+  border-color: var(--success);
+  color: white;
+}
+
+.step.active .step-icon {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const metricsCtx = document.getElementById('pipelineMetrics').getContext('2d');
+  new Chart(metricsCtx, {
+    type: 'line',
+    data: {
+      labels: ['0%', '20%', '40%', '60%', '80%', '100%'],
+      datasets: [{
+        label: 'CPU Usage',
+        data: [30, 45, 57, 52, 65, 45],
+        borderColor: '#667eea',
+        tension: 0.4,
+        fill: false
+      }, {
+        label: 'Memory Usage',
+        data: [45, 55, 65, 59, 72, 65],
+        borderColor: '#48bb78',
+        tension: 0.4,
+        fill: false
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 100,
+          ticks: {
+            callback: function(value) {
+              return value + '%';
+            }
+          }
+        }
+      }
+    }
+  });
+});
+</script>

@@ -1,0 +1,37 @@
+<%= form_with(model: ai_model, local: true) do |form| %>
+  <% if ai_model.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(ai_model.errors.count, "error") %> prohibited this ai_model from being saved:</h2>
+
+      <ul>
+        <% ai_model.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: 'form-label' %>
+    <%= form.text_area :description, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :status, class: 'form-label' %>
+    <%= form.select :status, AiModel.statuses.keys, {}, class: 'form-select' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :model_files, 'Fichiers du modèle', class: 'form-label' %>
+    <%= form.file_field :model_files, multiple: true, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

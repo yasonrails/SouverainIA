@@ -1,0 +1,153 @@
+/* Styles pour les filtres avancés */
+.filter-section {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.filter-section.expanded {
+  box-shadow: var(--shadow-md);
+}
+
+.filter-header {
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.filter-content.show {
+  max-height: 500px;
+  padding: 1rem;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Styles pour les notifications */
+.notification-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1050;
+  transform: translateX(120%);
+  transition: transform 0.3s ease;
+}
+
+.notification-toast.show {
+  transform: translateX(0);
+}
+
+.notification-content {
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  min-width: 300px;
+  background: white;
+}
+
+.notification-content.success {
+  border-left: 4px solid var(--success);
+}
+
+.notification-content.error {
+  border-left: 4px solid var(--danger);
+}
+
+.notification-content.warning {
+  border-left: 4px solid var(--warning);
+}
+
+.notification-content.info {
+  border-left: 4px solid var(--primary);
+}
+
+/* Styles pour les actions rapides sur mobile */
+.quick-actions {
+  position: absolute;
+  right: -100px;
+  top: 0;
+  height: 100%;
+  background: white;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+  transform: translateX(100%);
+}
+
+.quick-actions.show {
+  transform: translateX(0);
+}
+
+.quick-action-btn {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: none;
+}
+
+.quick-action-btn.edit {
+  background: var(--primary);
+}
+
+.quick-action-btn.delete {
+  background: var(--danger);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modern-card {
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .notification-toast {
+    top: auto;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    transform: translateY(120%);
+  }
+  
+  .notification-toast.show {
+    transform: translateY(0);
+  }
+  
+  .filter-section {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    border-radius: 0;
+  }
+}
+
+/* Animation des filtres */
+.filter-item {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.3s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Transitions fluides */
+.filtered-results {
+  transition: opacity 0.3s ease;
+}
+
+.filtered-results.loading {
+  opacity: 0.5;
+}

@@ -1,0 +1,30 @@
+<h1>Pipelines</h1>
+
+<%= link_to 'Nouveau Pipeline', new_pipeline_path, class: 'btn btn-primary' %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Description</th>
+      <th>Modèle IA</th>
+      <th>Statut</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pipelines.each do |pipeline| %>
+      <tr>
+        <td><%= link_to pipeline.name, pipeline_path(pipeline) %></td>
+        <td><%= pipeline.description %></td>
+        <td><%= pipeline.ai_model&.name %></td>
+        <td><%= pipeline.status %></td>
+        <td>
+          <%= link_to 'Voir', pipeline_path(pipeline) %>
+          <%= link_to 'Éditer', edit_pipeline_path(pipeline) %>
+          <%= link_to 'Supprimer', pipeline_path(pipeline), method: :delete, data: { confirm: 'Êtes-vous sûr?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
